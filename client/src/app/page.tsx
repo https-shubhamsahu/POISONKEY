@@ -18,6 +18,7 @@ const CONTRACT_ID = 'CBJLXD2M62KCUU7LVXL5UM6RTWX4UF462NCTCLIIDNVOHZ7YLMBQA2FG';
 const RPC_URL = 'https://soroban-testnet.stellar.org';
 const NETWORK_PASSPHRASE = 'Test SDF Network ; September 2015';
 const GRANT_ID_HEX = 'a1'.repeat(32);
+const OWNER = 'GBN2YJPBHYRKJV6EQ5II4V4XFI7YDA2QN2JKKCNW3TMQIOYLBQKCA2U7';
 
 const DOC_TITLE = 'Q3 Board Deck — CONFIDENTIAL';
 const DOC_BODY = `BOARD PACKET / Q3 — RESTRICTED DISTRIBUTION
@@ -53,7 +54,8 @@ const expertTx = (h: string) =>
 /* ---------------------------------------------------------------- RPC CALLS */
 
 async function simulate(source: string, method: string, args: any[]) {
-  const acct = await server.getAccount(source);
+  const src = source || OWNER;
+  const acct = await server.getAccount(src).catch(() => server.getAccount(OWNER));
   const c = new SDK.Contract(CONTRACT_ID);
   const tx = new SDK.TransactionBuilder(acct, {
     fee: '1000000',
@@ -85,7 +87,9 @@ async function invoke(source: string, method: string, args: any[]) {
     networkPassphrase: NETWORK_PASSPHRASE,
     address: source,
   });
-  const signedXdr = typeof signed === 'string' ? signed : signed.signedTxXdr;
+  if (signed?.error) throw new Error(signed.error);
+  const signedXdr = typeof signed === 'string' ? signed : signed?.signedTxXdr;
+  if (!signedXdr) throw new Error('Transaction signing cancelled');
 
   const sent: any = await server.sendTransaction(
     SDK.TransactionBuilder.fromXDR(signedXdr, NETWORK_PASSPHRASE)
@@ -173,13 +177,16 @@ export default function Page() {
     setErr('');
     try {
       const c = await isConnected();
-      if (!(c as any).isConnected && !c) throw new Error('Freighter not found');
+      const isConn = typeof c === 'boolean' ? c : (c as any)?.isConnected;
+      if (!isConn) throw new Error('Freighter not found');
       await requestAccess();
       const a: any = await getAddress();
-      const address = a.address ?? a;
+      if (a?.error) throw new Error(a.error);
+      const address = typeof a === 'string' ? a : a?.address;
+      if (!address) throw new Error('Could not get wallet address');
       setAddr(address);
       const n: any = await getNetwork();
-      const passphrase = n.networkPassphrase ?? n;
+      const passphrase = typeof n === 'string' ? n : n?.networkPassphrase;
       setNetOk(String(passphrase).includes('Test SDF Network'));
     } catch (e) {
       setErr(humanError(e));
@@ -189,15 +196,14 @@ export default function Page() {
   /* ---------------- reads ---------------- */
 
   const refresh = useCallback(async () => {
-    if (!addr) return;
     try {
       const l = await server.getLatestLedger();
       setSeq(l.sequence);
     } catch {}
     try {
-      const g = await simulate(addr, 'get_grant', [bytesVal(GRANT_ID)]);
+      const g = await simulate(addr || OWNER, 'get_grant', [bytesVal(GRANT_ID)]);
       if (g) setGrant(g as Grant);
-      const hs = await simulate(addr, 'list_holders', [bytesVal(GRANT_ID)]);
+      const hs = await simulate(addr || OWNER, 'list_holders', [bytesVal(GRANT_ID)]);
       if (Array.isArray(hs)) {
         setRows(
           hs.map((t: any) => ({
@@ -212,11 +218,10 @@ export default function Page() {
   }, [addr]);
 
   useEffect(() => {
-    if (!addr) return;
     refresh();
     pollRef.current = setInterval(refresh, 5000);
     return () => clearInterval(pollRef.current);
-  }, [addr, refresh]);
+  }, [refresh]);
 
   /* ---------------- bond & unlock ---------------- */
 
@@ -367,9 +372,7 @@ export default function Page() {
           >
             {revealed
               ? DOC_BODY
-              : DOC_BODY.replace(/[A-Za-z0-9]/g, () =>
-                  '0123456789abcdef'[Math.floor(Math.random() * 16)]
-                )}
+              : DOC_BODY.split('').map((ch, i) => /[A-Za-z0-9]/.test(ch) ? '0123456789abcdef'[i % 16] : ch).join('')}
           </pre>
 
           <div style={{ marginTop: 12, color: '#7A828C' }}>

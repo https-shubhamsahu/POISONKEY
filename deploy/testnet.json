@@ -14,7 +14,8 @@
   "contractId": "CCJU4K6VPLUNLRSBEBMF73F7Q6VWIV74WGWDUBJKSYSOTJN3LCDOP4V3",
   "wasmHash": "2f350c45da7d226424c2bbdd6952750190f8e5b86e615bb34c795844a214ac8c",
   "xlmSac": "CDLZFC3SYJYDZT7K67VZ75HPJVIEUVNIXF47ZG2FB2RMQQVU2HHGCYSC",
-  "grantIdHex": "a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1",
+  "grantIdHex": "d570e53b9da08fb6112b9ee94fa4503e5ff71e43da2fbcd961f399df891b6c4c",
   "network": "testnet",
-  "networkPassphrase": "Test SDF Network ; September 2015"
+  "networkPassphrase": "Test SDF Network ; September 2015",
+  "previousGrantIdHex": "a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1"
 }

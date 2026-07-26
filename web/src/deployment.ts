@@ -11,7 +11,7 @@ export const DEPLOYMENT = {
   networkPassphrase: "Test SDF Network ; September 2015",
   contractId: "CCJU4K6VPLUNLRSBEBMF73F7Q6VWIV74WGWDUBJKSYSOTJN3LCDOP4V3",
   xlmSac: "CDLZFC3SYJYDZT7K67VZ75HPJVIEUVNIXF47ZG2FB2RMQQVU2HHGCYSC",
-  grantIdHex: "a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1",
+  grantIdHex: "d570e53b9da08fb6112b9ee94fa4503e5ff71e43da2fbcd961f399df891b6c4c",
   explorer: 'https://stellar.expert/explorer/testnet',
   demo: {
     owner: {

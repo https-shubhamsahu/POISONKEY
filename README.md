@@ -387,6 +387,124 @@ The contract executes the predefined rule.
 
 ---
 
+## Live on Stellar Testnet
+
+| | |
+|---|---|
+| Contract ID | `CCJU4K6VPLUNLRSBEBMF73F7Q6VWIV74WGWDUBJKSYSOTJN3LCDOP4V3` |
+| Demo grant id | `d570e53b9da08fb6112b9ee94fa4503e5ff71e43da2fbcd961f399df891b6c4c` |
+| Bond / bounty | 50 XLM / 50% (25 XLM to the reporter, 25 XLM to the owner) |
+| Token | native XLM SAC, `CDLZFC3SYJYDZT7K67VZ75HPJVIEUVNIXF47ZG2FB2RMQQVU2HHGCYSC` |
+| RPC | `https://soroban-testnet.stellar.org` |
+| Explorer | [stellar.expert](https://stellar.expert/explorer/testnet/contract/CCJU4K6VPLUNLRSBEBMF73F7Q6VWIV74WGWDUBJKSYSOTJN3LCDOP4V3) |
+
+The exact deployment lives in `deploy/testnet.json`, and `web/src/deployment.ts` is generated
+from it so the frontend can never drift from what is actually on chain.
+
+The keypairs in that file are throwaway **testnet** identities holding no real value. They are
+bundled deliberately: the page seeds its own demo board so two bonded readers are already on
+screen before anyone connects a wallet. Never put a mainnet secret there.
+
+---
+
+## The proof message
+
+`prove_leak` verifies an Ed25519 signature over exactly **88 bytes**, and the Rust and
+TypeScript sides have to agree on every one of them:
+
+```text
+bytes  0..32   the raw 32-byte grant_id
+bytes 32..88   the claimant's Stellar address as 56 ASCII bytes ("G...", strkey text,
+               not the decoded key, no length prefix and no terminator)
+```
+
+Because the claimant's own address is inside the signed bytes, a signature seen in the mempool
+is useless to anyone else — front-running a bounty claim is cryptographically impossible, not
+merely discouraged. `contracts/poisonkey/src/test.rs` asserts this directly, and
+`scripts/e2e.mjs` re-asserts it against the deployed contract.
+
+---
+
+## Repository layout
+
+```text
+contracts/poisonkey/     the Soroban contract and its tests
+scripts/                 deploy, seed, verify and rotate tooling (JS SDK, no CLI needed)
+web/                     the single-page frontend (React + Vite + TypeScript)
+deploy/testnet.json      what is deployed, and the demo identities
+```
+
+---
+
+## Running it
+
+**Contract tests** — nine tests covering the happy path, the payout split, a bad signature, a
+replayed signature, a spent credential, and release after expiry:
+
+```bash
+cargo test -p poisonkey
+```
+
+**Build the wasm** (needs `rustup target add wasm32v1-none`):
+
+```bash
+cargo build -p poisonkey --target wasm32v1-none --release
+```
+
+**Deploy and provision** — uploads the wasm, instantiates the contract, funds the demo
+identities via Friendbot, and writes `deploy/testnet.json`. Idempotent; `--redeploy` forces a
+new instance:
+
+```bash
+node scripts/deploy.mjs
+```
+
+**Regenerate the frontend config** from the deployment:
+
+```bash
+node scripts/write-config.mjs
+```
+
+**Verify the whole mechanism against the deployed contract** — publishes a throwaway grant,
+bonds it, proves the leak, and asserts the payout split, the burn, the front-run rejection and
+the double-spend rejection:
+
+```bash
+node scripts/e2e.mjs
+```
+
+**Run the frontend:**
+
+```bash
+npm install --prefix web && npm run dev --prefix web
+```
+
+**Between rehearsals** — a burned bond can never return to BONDED, so point the demo at a
+fresh grant and let the page re-seed a clean board:
+
+```bash
+node scripts/rotate-grant.mjs
+```
+
+---
+
+## Demo script
+
+1. The board is already live: two bonded readers, 50 XLM each, ledger sequence ticking.
+2. Connect Freighter on Testnet, press **BOND & UNLOCK**. The document decrypts and the
+   ACCESS CREDENTIAL appears — *this key opens the document, and it can also take your 50 XLM.*
+3. Copy that credential and paste it into **LEAK HUNTER**. The panel names whose bond it is and
+   the exact bounty before anything is signed.
+4. Hand it to someone else. They connect *their own* Testnet wallet, paste the key, press
+   **CLAIM BOUNTY**.
+5. The bond bar drains to zero, the pill flips to BURNED, 25 XLM lands in their wallet, and the
+   forensic ledger gains a line with an explorer link.
+
+The kicker: try that same signature from a third wallet. It fails. The reporter never published
+the key — they signed their own address with it.
+
+---
+
 ## Threat Model
 
 POISONKEY does **not** make digital information impossible to copy.

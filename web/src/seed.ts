@@ -19,7 +19,6 @@ import {
   invoke,
   explain,
 } from './chain';
-import * as SDKTypes from '@stellar/stellar-sdk';
 import { DOC_TITLE_FALLBACK } from './doc';
 
 export const BOND_STROOPS = 500_000_000n; // 50 XLM
@@ -36,7 +35,7 @@ function isMissing(err: unknown, code: number): boolean {
   return raw.includes(`Error(Contract, #${code})`);
 }
 
-async function callRaw(method: string, args: SDKTypes.xdr.ScVal[], source: string) {
+async function callRaw(method: string, args: SDK.xdr.ScVal[], source: string) {
   const account = await server.getAccount(source);
   const tx = new SDK.TransactionBuilder(account, {
     fee: '1000000',

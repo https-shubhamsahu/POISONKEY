@@ -254,26 +254,46 @@ export async function invokeExplained(
 
 export type LedgerEvent = {
   kind: string;
+  grantHex: string;
   ledger: number;
   txHash: string;
   data: unknown;
 };
 
-/** Recent POISONKEY events, oldest first — the forensic ledger. */
-export async function recentEvents(latest: number): Promise<LedgerEvent[]> {
-  // Testnet keeps a limited event window; stay inside it.
-  const startLedger = Math.max(1, latest - 16_000);
+/**
+ * How far back to scan for events, in ledgers (~5s each, so roughly 8 hours).
+ *
+ * This is deliberately well short of the RPC's retention window. getEvents caps
+ * how many ledgers it will scan per request and, past that cap, returns an empty
+ * page plus a cursor rather than an error — so an over-wide startLedger looks
+ * exactly like "no events ever happened". Callers accumulate results across polls,
+ * so a modest window loses nothing.
+ */
+const EVENT_LOOKBACK = 6_000;
+
+/**
+ * Recent POISONKEY events, oldest first — the forensic ledger.
+ *
+ * Every event carries its grant_id as the third topic, so callers can keep to the
+ * grant they are displaying; one contract instance holds many grants.
+ */
+export async function recentEvents(latest: number, grantId?: Uint8Array): Promise<LedgerEvent[]> {
   const res = await server.getEvents({
-    startLedger,
+    startLedger: Math.max(1, latest - EVENT_LOOKBACK),
     filters: [{ type: 'contract', contractIds: [CONTRACT_ID] }],
-    limit: 100,
+    limit: 200,
   });
-  return res.events.map((e) => ({
-    kind: String(SDK.scValToNative(e.topic[1])),
-    ledger: e.ledger,
-    txHash: e.txHash,
-    data: SDK.scValToNative(e.value),
-  }));
+  const want = grantId ? bytesToHex(grantId) : null;
+  return res.events
+    .map((e) => ({
+      kind: String(SDK.scValToNative(e.topic[1])),
+      grantHex: bytesToHex(new Uint8Array(SDK.scValToNative(e.topic[2]) as Uint8Array)),
+      ledger: e.ledger,
+      txHash: e.txHash,
+      data: SDK.scValToNative(e.value),
+    }))
+    .filter((e) => !want || e.grantHex === want)
+    .sort((a, b) => a.ledger - b.ledger);
 }
 
 export const explorerTx = (hash: string) => `${DEPLOYMENT.explorer}/tx/${hash}`;

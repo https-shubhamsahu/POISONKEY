@@ -1,0 +1,69 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="520" viewBox="0 0 1200 520" role="img" aria-labelledby="title desc">
+<title id="title">POISONKEY: credentials that punish their own leak</title>
+<desc id="desc">An animated board from the POISONKEY app. BOB and CARA each have 50 XLM bonded. A copy of BOB's secret key leaks into the leak hunter field; ALICE signs grant_id || her address with it, ed25519_verify passes, BOB's bond bar drains to zero and his status flips from BONDED to BURNED, then 25 XLM goes to ALICE and 25 XLM to the owner. CARA stays bonded.</desc>
+<style>
+.a{animation-duration:8s;animation-iteration-count:infinite;animation-timing-function:cubic-bezier(.25,.7,.3,1)}
+.before{animation-name:before;opacity:0}
+.after{animation-name:after}
+.chip{animation-name:chip;opacity:0}
+.field-before{animation-name:fieldBefore;opacity:0}
+.field-after{animation-name:fieldAfter}
+.verify{animation-name:verify}
+.payout{animation-name:payout}
+.drain{animation-name:drain;transform-box:fill-box;transform-origin:left center;transform:scaleX(0)}
+@keyframes before{0%,36%{opacity:1}40%,94%{opacity:0}100%{opacity:1}}
+@keyframes after{0%,40%{opacity:0}44%,88%{opacity:1}94%,100%{opacity:0}}
+@keyframes chip{0%,9%{opacity:0;transform:translate(0,0)}12%{opacity:1;transform:translate(0,0)}18%{opacity:1;transform:translate(-70px,96px)}24%{opacity:1;transform:translate(-150px,204px)}28%,100%{opacity:0;transform:translate(-150px,204px)}}
+@keyframes fieldBefore{0%,22%{opacity:1}26%,93%{opacity:0}100%{opacity:1}}
+@keyframes fieldAfter{0%,22%{opacity:0}26%,88%{opacity:1}94%,100%{opacity:0}}
+@keyframes verify{0%,28%{opacity:0}34%,88%{opacity:1}94%,100%{opacity:0}}
+@keyframes payout{0%,48%{opacity:0;transform:translate(0,10px)}56%,88%{opacity:1;transform:translate(0,0)}94%,100%{opacity:0;transform:translate(0,0)}}
+@keyframes drain{0%,34%{transform:scaleX(1);fill:#b6ff3c;opacity:1}48%,92%{transform:scaleX(0);fill:#ff3b3b;opacity:1}93%{transform:scaleX(0);fill:#ff3b3b;opacity:0}94%{transform:scaleX(1);fill:#b6ff3c;opacity:0}100%{transform:scaleX(1);fill:#b6ff3c;opacity:1}}
+@media (prefers-reduced-motion: reduce){*{animation:none !important}}
+</style>
+<rect x="1" y="1" width="1198" height="518" rx="22" fill="#08090a" stroke="#262c2e" stroke-width="2"/>
+<text x="60" y="112" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace" font-size="58" font-weight="700" fill="#b6ff3c" text-anchor="start" letter-spacing="6">POISONKEY</text>
+<text x="60" y="172" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="34" font-weight="600" fill="#eef2ef" text-anchor="start">Credentials that punish</text>
+<text x="60" y="214" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="34" font-weight="600" fill="#eef2ef" text-anchor="start">their own leak.</text>
+<text x="60" y="270" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="21" font-weight="400" fill="#aab3af" text-anchor="start">BOB bonds 50 XLM and gets an ed25519</text>
+<text x="60" y="301" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="21" font-weight="400" fill="#aab3af" text-anchor="start">key that opens the document. If that</text>
+<text x="60" y="332" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="21" font-weight="400" fill="#aab3af" text-anchor="start">key leaks, whoever holds it can sign</text>
+<text x="60" y="363" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="21" font-weight="400" fill="#aab3af" text-anchor="start">a claim, and the contract pays them</text>
+<text x="60" y="394" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="21" font-weight="400" fill="#aab3af" text-anchor="start">half of BOB's bond.</text>
+<text x="60" y="456" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace" font-size="18" font-weight="400" fill="#8f9894" text-anchor="start">Soroban contract on Stellar Testnet</text>
+<text x="60" y="482" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace" font-size="18" font-weight="400" fill="#8f9894" text-anchor="start">9 contract tests · 88-byte leak proof</text>
+<rect x="556" y="36" width="596" height="448" rx="10" fill="#0c0e0f" stroke="#1b2022" stroke-width="1.5"/>
+<text x="580" y="68" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace" font-size="18" font-weight="400" fill="#8f9894" text-anchor="start" letter-spacing="2">BONDED READERS</text>
+<text x="1128" y="68" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace" font-size="18" font-weight="400" fill="#6f7874" text-anchor="end">grant d570e53b…</text>
+<line x1="556" y1="84" x2="1152" y2="84" stroke="#1b2022" stroke-width="1.5"/>
+<rect x="568" y="94" width="572" height="98" fill="#101314"/>
+<rect class="a after" x="568" y="94" width="4" height="98" fill="#ff3b3b"/>
+<rect class="a before" x="568" y="94" width="4" height="98" fill="#b6ff3c"/>
+<text x="588" y="124" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace" font-size="22" font-weight="700" fill="#ccd2cf" text-anchor="start" letter-spacing="1.5">BOB</text>
+<text x="654" y="124" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace" font-size="18" font-weight="400" fill="#8f9894" text-anchor="start">GCEG…34DO</text>
+<g class="a after"><rect x="1006" y="104" width="100" height="30" rx="3" fill="#1a0808" stroke="#5a1919" stroke-width="1.5"/><text x="1056.0" y="125" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace" font-size="18" font-weight="400" fill="#ff3b3b" text-anchor="middle" letter-spacing="2">BURNED</text></g>
+<g class="a before"><rect x="1006" y="104" width="100" height="30" rx="3" fill="#131a08" stroke="#3d5a19" stroke-width="1.5"/><text x="1056.0" y="125" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace" font-size="18" font-weight="400" fill="#b6ff3c" text-anchor="middle" letter-spacing="2">BONDED</text></g>
+<rect x="588" y="140" width="536" height="10" fill="#121616" stroke="#1b2022"/>
+<rect class="a drain" x="588" y="140" width="536" height="10" fill="#ff3b3b"/>
+<text x="588" y="178" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace" font-size="18" font-weight="400" fill="#8f9894" text-anchor="start">key d04a…8737</text>
+<text x="1124" y="178" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace" font-size="18" font-weight="400" fill="#ff3b3b" text-anchor="end" class="a after">slashed · bounty to ALICE</text>
+<text x="1124" y="178" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace" font-size="18" font-weight="400" fill="#8f9894" text-anchor="end" class="a before">50 XLM at risk</text>
+<rect x="568" y="200" width="572" height="98" fill="#101314"/>
+<rect x="568" y="200" width="4" height="98" fill="#b6ff3c"/>
+<text x="588" y="230" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace" font-size="22" font-weight="700" fill="#ccd2cf" text-anchor="start" letter-spacing="1.5">CARA</text>
+<text x="670" y="230" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace" font-size="18" font-weight="400" fill="#8f9894" text-anchor="start">GAS2…DI2G</text>
+<g><rect x="1006" y="210" width="100" height="30" rx="3" fill="#131a08" stroke="#3d5a19" stroke-width="1.5"/><text x="1056.0" y="231" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace" font-size="18" font-weight="400" fill="#b6ff3c" text-anchor="middle" letter-spacing="2">BONDED</text></g>
+<rect x="588" y="246" width="536" height="10" fill="#121616" stroke="#1b2022"/>
+<rect x="588" y="246" width="536" height="10" fill="#b6ff3c"/>
+<text x="588" y="284" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace" font-size="18" font-weight="400" fill="#8f9894" text-anchor="start">key a09a…a4f0</text>
+<text x="1124" y="284" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace" font-size="18" font-weight="400" fill="#8f9894" text-anchor="end">50 XLM at risk</text>
+<line x1="556" y1="316" x2="1152" y2="316" stroke="#1b2022" stroke-width="1.5"/>
+<text x="580" y="346" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace" font-size="18" font-weight="400" fill="#8f9894" text-anchor="start" letter-spacing="2">LEAK HUNTER</text>
+<text x="1128" y="346" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace" font-size="18" font-weight="400" fill="#6f7874" text-anchor="end">signed by ALICE</text>
+<rect x="580" y="362" width="544" height="40" rx="3" fill="#08090a" stroke="#262c2e" stroke-width="1.5"/>
+<text x="596" y="389" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace" font-size="18" font-weight="400" fill="#6f7874" text-anchor="start" class="a field-before">paste a leaked ACCESS CREDENTIAL</text>
+<text x="596" y="389" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace" font-size="18" font-weight="400" fill="#ff3b3b" text-anchor="start" class="a field-after">ERERERERERERERERERERERERERERERERERERERERERH…</text>
+<g class="a verify"><text x="580" y="436" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace" font-size="18" font-weight="400" fill="#8f9894" text-anchor="start">sig over grant_id || ALICE</text><text x="1124" y="436" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace" font-size="18" font-weight="400" fill="#b6ff3c" text-anchor="end">ed25519_verify ✓</text></g>
+<g class="a payout"><text x="580" y="470" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace" font-size="20" font-weight="700" fill="#b6ff3c" text-anchor="start">+25 XLM → ALICE</text><text x="1124" y="470" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace" font-size="20" font-weight="700" fill="#ccd2cf" text-anchor="end">+25 XLM → owner</text></g>
+<g class="a chip"><rect x="738" y="160" width="232" height="30" rx="15" fill="#1a0808" stroke="#ff3b3b" stroke-width="1.5"/><text x="754" y="181" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace" font-size="18" font-weight="400" fill="#ff3b3b" text-anchor="start">secret ERERERER…</text></g>
+</svg>

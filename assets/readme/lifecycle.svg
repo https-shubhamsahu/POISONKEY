@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="470" viewBox="0 0 1200 470" role="img" aria-labelledby="title desc">
+<title id="title">POISONKEY credential lifecycle</title>
+<desc id="desc">Lifecycle of one POISONKEY credential. The owner calls publish with a 50 XLM bond, a 50 percent bounty and a 7 day expiry. A reader calls bond, moving 50 XLM into the contract and registering an ed25519 public key, which puts the key in BONDED, status 0. From there prove_leak by anyone holding the secret moves it to BURNED, status 1, paying 25 XLM to the claimant and 25 XLM to the owner, or release by the reader after expires_at moves it to RELEASED, status 2, returning the full 50 XLM. Both end states are final.</desc>
+
+<rect x="1" y="1" width="1198" height="468" rx="22" fill="#08090a" stroke="#262c2e" stroke-width="2"/>
+<rect x="48" y="150" width="236" height="150" rx="8" fill="#0c0e0f" stroke="#262c2e" stroke-width="1.5"/>
+<text x="68" y="186" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace" font-size="22" font-weight="700" fill="#eef2ef" text-anchor="start">publish</text>
+<text x="68" y="216" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="18" font-weight="400" fill="#8f9894" text-anchor="start">owner signs</text>
+<text x="68" y="248" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="20" font-weight="400" fill="#ccd2cf" text-anchor="start">demo: 50 XLM bond</text>
+<text x="68" y="278" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="20" font-weight="400" fill="#ccd2cf" text-anchor="start">50% bounty, 7 days</text>
+<path d="M284 225 L318 225" fill="none" stroke="#8f9894" stroke-width="2"/><path d="M318 225 L306.0 219.0 L306.0 231.0 Z" fill="#8f9894"/>
+<rect x="320" y="150" width="250" height="150" rx="8" fill="#0c0e0f" stroke="#262c2e" stroke-width="1.5"/>
+<text x="340" y="186" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace" font-size="22" font-weight="700" fill="#eef2ef" text-anchor="start">bond</text>
+<text x="340" y="216" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="18" font-weight="400" fill="#8f9894" text-anchor="start">reader signs</text>
+<text x="340" y="248" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="20" font-weight="400" fill="#ccd2cf" text-anchor="start">50 XLM into contract</text>
+<text x="340" y="278" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="20" font-weight="400" fill="#ccd2cf" text-anchor="start">key_pub registered</text>
+<path d="M570 225 L604 225" fill="none" stroke="#8f9894" stroke-width="2"/><path d="M604 225 L592.0 219.0 L592.0 231.0 Z" fill="#8f9894"/>
+<rect x="606" y="178" width="176" height="94" rx="8" fill="#131a08" stroke="#3d5a19" stroke-width="1.5"/>
+<text x="694" y="220" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace" font-size="24" font-weight="700" fill="#b6ff3c" text-anchor="middle" letter-spacing="2">BONDED</text>
+<text x="694" y="252" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace" font-size="18" font-weight="400" fill="#8f9894" text-anchor="middle">status 0</text>
+<path d="M782 206 C830 206 836 112 878 112" fill="none" stroke="#ff3b3b" stroke-width="2"/><path d="M878 112 L866.0 106.0 L866.0 118.0 Z" fill="#ff3b3b"/>
+<path d="M782 244 C830 244 836 338 878 338" fill="none" stroke="#8f9894" stroke-width="2"/><path d="M878 338 L866.0 332.0 L866.0 344.0 Z" fill="#8f9894"/>
+<rect x="880" y="36" width="272" height="160" rx="8" fill="#0c0e0f" stroke="#5a1919" stroke-width="1.5"/>
+<rect x="880" y="36" width="4" height="160" fill="#ff3b3b"/>
+<text x="904" y="72" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace" font-size="22" font-weight="700" fill="#eef2ef" text-anchor="start">prove_leak</text>
+<text x="904" y="100" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="18" font-weight="400" fill="#8f9894" text-anchor="start">anyone with the secret</text>
+<g><rect x="904" y="114" width="152" height="30" rx="3" fill="#1a0808" stroke="#5a1919" stroke-width="1.5"/><text x="980.0" y="135" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace" font-size="18" font-weight="400" fill="#ff3b3b" text-anchor="middle" letter-spacing="2">BURNED · 1</text></g>
+<text x="904" y="174" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="18" font-weight="400" fill="#ccd2cf" text-anchor="start">25 XLM claimant, 25 owner</text>
+<rect x="880" y="254" width="272" height="160" rx="8" fill="#0c0e0f" stroke="#262c2e" stroke-width="1.5"/>
+<rect x="880" y="254" width="4" height="160" fill="#8f9894"/>
+<text x="904" y="290" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace" font-size="22" font-weight="700" fill="#eef2ef" text-anchor="start">release</text>
+<text x="904" y="318" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="18" font-weight="400" fill="#8f9894" text-anchor="start">reader, after expires_at</text>
+<g><rect x="904" y="332" width="178" height="30" rx="3" fill="#101314" stroke="#262c2e" stroke-width="1.5"/><text x="993.0" y="353" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace" font-size="18" font-weight="400" fill="#8f9894" text-anchor="middle" letter-spacing="2">RELEASED · 2</text></g>
+<text x="904" y="392" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="18" font-weight="400" fill="#ccd2cf" text-anchor="start">full 50 XLM back to reader</text>
+<text x="48" y="436" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="20" font-weight="400" fill="#8f9894" text-anchor="start">BURNED and RELEASED are final: a second prove_leak or release on that key fails with WrongStatus.</text>
+</svg>
